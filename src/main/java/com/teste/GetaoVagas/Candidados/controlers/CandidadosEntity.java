@@ -19,7 +19,7 @@ public class CandidadosEntity {
     @Column(name = "name") // aqui seria o nome da coluna, mas isso so se vc quiser que o nome do objeto seja diferente do nome do objeto
     private String nome;
     @Pattern(regexp =  "^(?!!\\s*).+" , message =  "nao pode ter espaço")
-    private String username;
+    private String userName;
     @Email(message = "Email inválido")
     private String email;
 
@@ -49,11 +49,11 @@ public class CandidadosEntity {
     }
 
     public String getUsername() {
-        return username;
+        return userName;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.userName = username;
     }
 
     public String getEmail() {

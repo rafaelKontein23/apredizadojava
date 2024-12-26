@@ -9,4 +9,8 @@ import java.util.UUID;
 public interface EmpresaRepository extends JpaRepository<EmpresaEntity, UUID> {
 
     Optional<EmpresaEntity> findByUserNameOrEmail(String useerName, String email); // aqui serve para procura a empresa por email ou userName, se tiver ele não deixa registrae
+
+    Optional<EmpresaEntity> findByUserName(String userName);
+
+
 }

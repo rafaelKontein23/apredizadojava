@@ -2,6 +2,7 @@ package com.teste.GetaoVagas.Candidados.UseCase;
 
 import com.teste.GetaoVagas.Candidados.controlers.CandidadosEntity;
 import com.teste.GetaoVagas.Candidados.controlers.CanditadoRepository;
+import com.teste.GetaoVagas.exeptions.UserFounExeption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +14,11 @@ public class CreateCandidoUSeCase {
     private CanditadoRepository canditadoRepository;
 
     public CandidadosEntity  execute(CandidadosEntity candidadosEntity){
-
-
-
-
+        this.canditadoRepository.findByUserNameOrEmail(candidadosEntity.getUsername(),candidadosEntity.getEmail()).ifPresent(
+                (user) ->{
+                    throw new UserFounExeption();
+                }
+        );
         return this.canditadoRepository.save(candidadosEntity);
     }
 
