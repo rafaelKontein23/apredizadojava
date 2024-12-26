@@ -1,35 +1,36 @@
-package com.teste.GetaoVagas.Candidados.controlers;
+package com.teste.GetaoVagas.empresa.entities;
 
-
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
-@Entity(name = "candidados") // nome da tabaela
-public class CandidadosEntity {
-    @Id
-    @GeneratedValue(strategy =  GenerationType.UUID) // para criar o id automaticamente
-    private UUID id;
 
-    @Column(name = "name") // aqui seria o nome da coluna, mas isso so se vc quiser que o nome do objeto seja diferente do nome do objeto
+@Entity(name = "empresa")
+public class EmpresaEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     private String nome;
     @Pattern(regexp =  "^(?!!\\s*).+" , message =  "nao pode ter espaço")
-    private String username;
+    private String userName;
     @Email(message = "Email inválido")
     private String email;
-
-    @Length(min= 1)
+    @Length(min= 4, max = 10000, message =  "sua senha não pode ser pequena")
     private String senha;
+
+    private String webSite;
     private String descricao;
-    private String curriculo;
 
     @CreationTimestamp
-    private LocalDate createAt; // seria o o dia que foi criado a tabela
+    private LocalDateTime craeatAT;
 
 
     public UUID getId() {
@@ -48,12 +49,12 @@ public class CandidadosEntity {
         this.nome = nome;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getEmail() {
@@ -72,6 +73,14 @@ public class CandidadosEntity {
         this.senha = senha;
     }
 
+    public String getWebSite() {
+        return webSite;
+    }
+
+    public void setWebSite(String webSite) {
+        this.webSite = webSite;
+    }
+
     public String getDescricao() {
         return descricao;
     }
@@ -80,13 +89,11 @@ public class CandidadosEntity {
         this.descricao = descricao;
     }
 
-    public String getCurriculo() {
-        return curriculo;
+    public LocalDateTime getCraeatAT() {
+        return craeatAT;
     }
 
-    public void setCurriculo(String curriculo) {
-        this.curriculo = curriculo;
+    public void setCraeatAT(LocalDateTime craeatAT) {
+        this.craeatAT = craeatAT;
     }
-
-
 }
