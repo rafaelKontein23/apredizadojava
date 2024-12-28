@@ -29,18 +29,22 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         System.out.println(hearder);
 
-        if(!hearder.isEmpty()){
-            var subject = this.jwtProvider.validacaoToken(hearder);
-            System.out.println(subject);
-            if(subject.isEmpty()){
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);// aqui serve para retorna um erro e mao ir para a controller
-                return;
+        if (request.getRequestURI().startsWith("/empresa")){
+            if(!hearder.isEmpty()){
+                var subject = this.jwtProvider.validacaoToken(hearder);
+                System.out.println(subject);
+                if(subject.isEmpty()){
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);// aqui serve para retorna um erro e mao ir para a controller
+                    return;
+                }
+                request.setAttribute("company_id", subject);
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(subject, null, Collections.emptyList());
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
-            request.setAttribute("company_id", subject);
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(subject, null, Collections.emptyList());
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }
-       filterChain.doFilter(request,response);
+
+
+       filterChain.doFilter(request,response); // encaminha para a contrller
 
     }
 }

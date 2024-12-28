@@ -2,13 +2,16 @@ package com.teste.GetaoVagas.Candidados.controlers;
 
 
 import com.teste.GetaoVagas.Candidados.UseCase.CreateCandidoUSeCase;
+import com.teste.GetaoVagas.Candidados.UseCase.ProfileCadidado;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/candidados")
@@ -16,6 +19,9 @@ public class CandidadosControler {
 
     @Autowired
     private CreateCandidoUSeCase createCandidoUSeCase;
+
+    @Autowired
+    private ProfileCadidado profileCadidado;
 
     @PostMapping("/")
     public ResponseEntity<Object> criacaoUsuario(@Valid @RequestBody CandidadosEntity cadidatos){
@@ -26,4 +32,17 @@ public class CandidadosControler {
           return ResponseEntity.badRequest().body(e.getMessage());
        }
     }
+
+    @GetMapping("/")
+    public ResponseEntity<Object> get(HttpServletRequest request){
+        var idcandidado = request.getAttribute("cadidado_id");
+       try {
+           var profile = this.profileCadidado.execute(UUID.fromString(idcandidado.toString()));
+           return ResponseEntity.ok().body(profile);
+       }catch (Exception e){
+           e.getMessage();
+           return ResponseEntity.badRequest().body(e.getMessage());
+       }
+    }
+
 }

@@ -11,7 +11,7 @@ public class JWTProvider {
     @Value("${security.token.secret}")
     private String chaveSecreta ;
     public String validacaoToken(String token){
-        token = token.replace("Bearer ", "");
+        token = token.replace("Bearer ", "").replace("Bearer:", "");
         Algorithm algorithm = Algorithm.HMAC256(chaveSecreta); // vc que cria a chave
 
         try {

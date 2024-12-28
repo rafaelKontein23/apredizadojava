@@ -16,16 +16,23 @@ import java.util.Optional;
 public class securityConfig {
 
     @Autowired
-    private SecurityFilter securityFilter;
+    private SecurityFilter securityFilter; // esse é da empresa
+
+    @Autowired
+    private SecurityCandidadoFiltro securityCandidadoFiltro; // esse é do caditado
     @Bean // serve para rescrver um metodo que existe ja
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity){
         try {
             httpSecurity.csrf(crsf -> crsf.disable() ).authorizeHttpRequests(auth ->{
                 auth.requestMatchers("/candidados/").permitAll()
                         .requestMatchers("/empresa/").permitAll()
-                        .requestMatchers("/autenticacao/empresa").permitAll(); // aqui vc esta liberando acesso para todos acessar esse endPoints
+                        .requestMatchers("/empresa/autenticacao").permitAll().
+                        requestMatchers("/candidados/autenticao").permitAll();
+                // aqui vc esta liberando acesso para todos acessar esse endPoints
                 auth.anyRequest().authenticated(); // aqui vc esta bloqueando esse endpoint. pq para acessar essa rota o usuario tem que esta logado por exemplo
-            }).addFilterBefore(securityFilter, BasicAuthenticationFilter.class);
+            })  .addFilterBefore(securityCandidadoFiltro, BasicAuthenticationFilter.class)
+                    .addFilterBefore(securityFilter, BasicAuthenticationFilter.class);
+
             return httpSecurity.build();
 
         } catch (Exception e) {

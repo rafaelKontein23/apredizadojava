@@ -2,6 +2,7 @@ package com.teste.GetaoVagas.empresa.entities;
 
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity (name = "Vagas")
+@Builder
 public class VagasEntite {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -23,6 +25,19 @@ public class VagasEntite {
 
     @Column(name = "empresa_id", insertable = false, updatable = false) // Evita duplicação
     private UUID id_empresa; // Chave estrangeira
+
+    public VagasEntite() {
+    }
+
+    public VagasEntite(UUID id, String descricao, String benificios, String level, EmpresaEntity empresaEntity, UUID id_empresa, LocalDateTime craeatAT) {
+        this.id = id;
+        this.descricao = descricao;
+        this.benificios = benificios;
+        this.level = level;
+        this.empresaEntity = empresaEntity;
+        this.id_empresa = id_empresa;
+        this.craeatAT = craeatAT;
+    }
 
     @CreationTimestamp
     private LocalDateTime craeatAT;
