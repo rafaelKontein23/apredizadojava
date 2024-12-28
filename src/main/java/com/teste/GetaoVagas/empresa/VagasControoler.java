@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,8 @@ public class VagasControoler {
     private CreateVagasUseCase createVagasUseCase;
 
     @PostMapping("/vagas")
-    private ResponseEntity<Object> execute(@Valid @RequestBody VagasEntite vagasEntite, HttpServletRequest request){
+    @PreAuthorize("hasRole('empresa')")
+    public ResponseEntity<Object> execute(@Valid @RequestBody VagasEntite vagasEntite, HttpServletRequest request){
         try {
             var companyID = request.getAttribute("company_id");
             vagasEntite.setId_empresa(UUID.fromString(companyID.toString()));

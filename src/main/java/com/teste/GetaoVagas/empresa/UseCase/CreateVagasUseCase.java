@@ -10,7 +10,8 @@ public class CreateVagasUseCase {
     @Autowired
     private VagasRepository vagasRepository;
 
-    public VagasEntite execute(
+    public VagasEntite
+    execute(
             VagasEntite vagasEntite
     ){
       return  this.vagasRepository.save(vagasEntite);

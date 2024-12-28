@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.naming.AuthenticationException;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Arrays;
 
 @Service
 public class AutenficacaoEmpresaUseCase {
@@ -37,7 +38,9 @@ public class AutenficacaoEmpresaUseCase {
         }
         Algorithm algorithm = Algorithm.HMAC256(chaveSecreta); // vc que cria a chave
         var token =JWT.create().withIssuer("NomeDAempresa").withExpiresAt(Instant.now().plus(Duration.ofHours(2))) // pra colocar um tempo de duração para o token
+                .withClaim("roles", Arrays.asList("empresa"))
                 .withSubject(company.getId().toString()).sign(algorithm); // para ciar o token jwt
+
         return token;
     }
 }

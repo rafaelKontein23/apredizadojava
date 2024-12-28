@@ -16,7 +16,6 @@ public class AutenticacaoCantidadoController {
 
     @Autowired
     private AutenficaoCanditadoUseCase autenficaoCanditadoUseCase;
-
     @PostMapping("/autenticao")
     private ResponseEntity<Object> execute(@Valid @RequestBody AutenticacaoCantidadoDto autenticacaoCantidadoDto){
         try {
