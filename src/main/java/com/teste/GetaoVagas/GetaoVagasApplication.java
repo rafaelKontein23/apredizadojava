@@ -9,14 +9,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@OpenAPIDefinition(// isso é pra ativar o swagger
-		info = @Info (
-				title =  "Gestão de vagas",
-				description = "api gestão de vagas ",
-				version = "1.0.0"
-		)
-)
-@SecurityScheme(name = "jwt_token",scheme = "bearer",type = SecuritySchemeType.HTTP,bearerFormat = "JWT", in = SecuritySchemeIn.HEADER) // aqui serve para o swegger aceitar auteficação jwt
 public class GetaoVagasApplication {
 
 	public static void main(String[] args) {
