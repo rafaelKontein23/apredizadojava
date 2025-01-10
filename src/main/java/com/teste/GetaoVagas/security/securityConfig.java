@@ -19,6 +19,7 @@ public class securityConfig {
 
     @Autowired
     private SecurityFilter securityFilter; // esse é da empresa
+    private static final String[] SweggerList = {"/swagger-ui/**","/v3/api-docs/**", "/swagger-resourse/**"};
 
     @Autowired
     private SecurityCandidadoFiltro securityCandidadoFiltro; // esse é do caditado
@@ -29,7 +30,9 @@ public class securityConfig {
                 auth.requestMatchers("/candidados/").permitAll()
                         .requestMatchers("/empresa/").permitAll()
                         .requestMatchers("/empresa/autenticacao").permitAll().
-                        requestMatchers("/candidados/autenticao").permitAll();
+                        requestMatchers("/candidados/autenticao").permitAll()
+                        .requestMatchers("/swagger-ui/index.html").permitAll().
+                        requestMatchers(SweggerList).permitAll();
                 // aqui vc esta liberando acesso para todos acessar esse endPoints
                 auth.anyRequest().authenticated(); // aqui vc esta bloqueando esse endpoint. pq para acessar essa rota o usuario tem que esta logado por exemplo
             })  .addFilterBefore(securityCandidadoFiltro, BasicAuthenticationFilter.class)
